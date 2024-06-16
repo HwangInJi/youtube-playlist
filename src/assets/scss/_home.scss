@@ -1,0 +1,64 @@
+.chart-container {
+  text-align: center;
+  padding: 20px;
+  bottom: 5rem;
+
+  h1{
+    font-size: 4rem;
+    em{
+      font-weight: bold;
+      color: #5a4fcf;
+    }
+  }
+}
+
+.slick-slider {
+  overflow: hidden;
+}
+
+.chart-slide {
+  outline: none;
+}
+
+.chart {
+  margin: 10px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.chart h2 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  color: #5a4fcf; /* 포인트 보라색 */
+}
+
+.chart table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.chart th, .chart td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+}
+
+.chart th {
+  background-color: #eaeaea;
+  color: #5a4fcf; /* 포인트 보라색 */
+}
+
+.chart tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.chart tr:hover {
+  background-color: #f1f1f1;
+}
+
+.chart td {
+  color: #333;
+}
