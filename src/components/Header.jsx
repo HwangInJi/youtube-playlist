@@ -1,17 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-
-import { FcRating, FcPlus, FcApproval } from "react-icons/fc";
-import { IoMusicalNotes } from "react-icons/io5";
+import { FcRating, FcPlus, FcApproval, FcCancel, FcCheckmark, FcEmptyTrash } from 'react-icons/fc';
+import { FaEdit } from 'react-icons/fa';
+import { IoMusicalNotes } from 'react-icons/io5';
+import { v4 as uuidv4 } from 'uuid'; // UUID를 생성하기 위한 라이브러리
 
 const Header = () => {
     const [showInput, setShowInput] = useState(false); // 입력 박스 표시 여부 상태
     const [newItem, setNewItem] = useState(''); // 새 항목의 제목 상태
-    const [playlistCount, setPlaylistCount] = useState(0); // 플레이리스트 개수 상태
+    const [playlists, setPlaylists] = useState([]); // 플레이리스트 상태
+    const [editingIndex, setEditingIndex] = useState(null); // 수정 중인 플레이리스트 인덱스
+    const [editingName, setEditingName] = useState(''); // 수정 중인 플레이리스트 이름
 
     useEffect(() => {
-        const count = localStorage.getItem('playlistCount') || 0; // 로컬 스토리지에서 플레이리스트 개수를 가져옴
-        setPlaylistCount(Number(count)); // 상태 업데이트
+        const storedPlaylists = JSON.parse(localStorage.getItem('playlists')) || [];
+        setPlaylists(storedPlaylists);
     }, []);
 
     const handleAddClick = () => {
@@ -24,32 +27,72 @@ const Header = () => {
 
     const handleAddItem = () => {
         if (newItem.trim() !== '') { // 제목이 비어있지 않은 경우
-            const newCount = playlistCount + 1; // 새로운 플레이리스트 번호
-            const playlistKey = `playlist${newCount}`; // 플레이리스트 키 (예: playlist1, playlist2)
             const newPlaylist = {
-                id: playlistKey,
+                id: uuidv4(), // UUID로 고유한 ID 생성
                 name: newItem,
                 items: [] // 초기 항목 배열
             };
 
-            localStorage.setItem(playlistKey, JSON.stringify(newPlaylist)); // 로컬 스토리지에 저장
-            localStorage.setItem('playlistCount', newCount.toString()); // 플레이리스트 개수 저장
-            setPlaylistCount(newCount); // 상태 업데이트
+            const updatedPlaylists = [...playlists, newPlaylist];
+            setPlaylists(updatedPlaylists); // 상태 업데이트
+            localStorage.setItem('playlists', JSON.stringify(updatedPlaylists)); // 로컬 스토리지에 저장
             setNewItem(''); // 입력 값 초기화
             setShowInput(false); // 입력 박스 숨기기
         }
     };
 
-    const playlistLinks = [];
-    for (let i = 1; i <= playlistCount; i++) {
-        const playlistKey = `playlist${i}`;
-        const playlist = JSON.parse(localStorage.getItem(playlistKey));
-        playlistLinks.push(
-            <li key={i}>
-                <Link to={`/playlist/${playlistKey}`}><span className='icon2'><FcApproval /></span>{playlist.name}</Link>
-            </li>
+    const handleCancelAdd = () => {
+        setNewItem(''); // 입력 값 초기화
+        setShowInput(false); // 입력 박스 숨기기
+    };
+
+    const handleEditClick = (id, name) => {
+        setEditingIndex(id);
+        setEditingName(name);
+    };
+
+    const handleEditChange = (e) => {
+        setEditingName(e.target.value);
+    };
+
+    const handleSaveEdit = (id) => {
+        const updatedPlaylists = playlists.map((playlist) =>
+            playlist.id === id ? { ...playlist, name: editingName } : playlist
         );
-    }
+        setPlaylists(updatedPlaylists);
+        localStorage.setItem('playlists', JSON.stringify(updatedPlaylists));
+        setEditingIndex(null);
+        setEditingName('');
+    };
+
+    const handleDeleteClick = (id) => {
+        const updatedPlaylists = playlists.filter((playlist) => playlist.id !== id);
+        setPlaylists(updatedPlaylists);
+        localStorage.setItem('playlists', JSON.stringify(updatedPlaylists));
+    };
+
+    const playlistLinks = playlists.map((playlist) => (
+        <li key={playlist.id}>
+            {editingIndex === playlist.id ? (
+                <div>
+                    <input
+                        type='text'
+                        value={editingName}
+                        onChange={handleEditChange}
+                    />
+                    <button onClick={() => handleSaveEdit(playlist.id)}><FcCheckmark /></button>
+                </div>
+            ) : (
+                <>
+                    <Link to={`/playlist/${playlist.id}`}><span className='icon2'><FcApproval /></span>{playlist.name}</Link>
+                    <div className="edit-buttons">
+                        <button onClick={() => handleEditClick(playlist.id, playlist.name)}><FaEdit /></button>
+                        <button onClick={() => handleDeleteClick(playlist.id)}><FcEmptyTrash /></button>
+                    </div>
+                </>
+            )}
+        </li>
+    ));
 
     return (
         <header id='header' role='banner'>
@@ -76,7 +119,8 @@ const Header = () => {
                                 value={newItem}
                                 onChange={handleInputChange}
                             />
-                            <button onClick={handleAddItem}>Add</button>
+                            <button onClick={handleAddItem}><FcCheckmark /></button>
+                            <button onClick={handleCancelAdd}><FcCancel /></button>
                         </div>
                     ) : (
                         <Link to='#' onClick={handleAddClick}><span className='icon2'><FcPlus /></span>Create</Link>

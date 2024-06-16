@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useRef } from 'react';
 import { MusicPlayerContext } from '../context/MusicPlayerProvider';
 import { IoMusicalNotes, IoPlaySkipForward, IoPlaySkipBack, IoPlay, IoPause, IoRepeat, IoShuffleOutline } from 'react-icons/io5';
 import ReactPlayer from 'react-player';
+import he from 'he';  // he 라이브러리 임포트
 
 const Aside = () => {
     const {
@@ -33,7 +34,20 @@ const Aside = () => {
     }, [currentTrackIndex]);
 
     if (musicData.length === 0) {
-        return <aside id="aside">Loading...</aside>;
+        return (
+            <aside id="aside">
+                <div className="play-now">
+                    <h2><IoMusicalNotes /> Now Playing</h2>
+                    <div>Loading...</div>
+                </div>
+                <div className="play-list">
+                    <h3><IoMusicalNotes /> My Music</h3>
+                    <ul>
+                        <li>플레이리스트가 비어 있습니다.</li>
+                    </ul>
+                </div>
+            </aside>
+        );
     }
 
     const currentTrack = musicData[currentTrackIndex];
@@ -74,9 +88,7 @@ const Aside = () => {
     return (
         <aside id="aside">
             <div className="play-now">
-                <h2>
-                    <IoMusicalNotes /> Now Playing
-                </h2>
+                <h2><IoMusicalNotes /> Now Playing</h2>
                 <div className="thumb">
                     <div className="img">
                         {currentTrack && (
@@ -95,12 +107,11 @@ const Aside = () => {
                     </div>
                     {currentTrack && (
                         <>
-                            <span className="title">{currentTrack.title}</span>
-                            <span className="artist">{currentTrack.artist}</span>
+                            <span className="title">{he.decode(currentTrack.title)}</span>
+                            <span className="artist">{he.decode(currentTrack.artist)}</span>
                         </>
                     )}
                 </div>
-
                 <div className="progress">
                     <div className="progress-bar">
                         <input
@@ -136,9 +147,8 @@ const Aside = () => {
                     </div>
                 </div>
             </div>
-
             <div className="play-list">
-                <h3><IoMusicalNotes /> Play list</h3>
+                <h3><IoMusicalNotes /> Play List</h3>
                 <ul>
                     {musicData.map((track, index) => (
                         <li
@@ -148,7 +158,7 @@ const Aside = () => {
                             className={index === currentTrackIndex ? 'current-track' : ''}
                         >
                             <span className="img" style={{ backgroundImage: `url(${track.imageURL})` }}></span>
-                            <span className="title">{track.title}</span>
+                            <span className="title">{he.decode(track.title)}</span>
                         </li>
                     ))}
                 </ul>

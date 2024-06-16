@@ -1,8 +1,8 @@
-import React, { createContext, useEffect, useState } from 'react'
+import React, { createContext, useState, useEffect } from 'react';
 
 export const MusicPlayerContext = createContext();
 
-const MusicPlayerProvider = ({children}) => {
+export const MusicPlayerProvider = ({ children }) => {
     const [musicData, setMusicData] = useState([]);
     const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
     const [isPlaying, setIsPlaying] = useState(false);
@@ -12,23 +12,37 @@ const MusicPlayerProvider = ({children}) => {
     const [isRepeating, setIsRepeating] = useState(false);
 
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await fetch('/data/music_list.json');
-                const data = await response.json();
-                setMusicData(data);
-                console.log(data);
-            } catch (error) {
-                console.error('데이터를 가져오는데 실패했습니다.', error);
-            }
-        };
-        fetchData();
+        const storedMusicData = JSON.parse(localStorage.getItem('musicData')) || [];
+        if (storedMusicData.length > 0) {
+            setMusicData(storedMusicData);
+        }
     }, []);
+
+    useEffect(() => {
+        localStorage.setItem('musicData', JSON.stringify(musicData));
+    }, [musicData]);
+
+    const loadInitialData = (data) => {
+        setMusicData(data);
+    };
+
+    const addTrackToList = (track) => {
+        const newTrack = { ...track, rank: 1 };
+        setMusicData((prevData) => {
+            return prevData.map((item, index) => ({ ...item, rank: index + 2 })).concat(newTrack);
+        });
+    };
+
+    const addTrackToEnd = (track) => {
+        setMusicData((prevData) => {
+            const newTrack = { ...track, rank: prevData.length + 1 };
+            return [...prevData, newTrack];
+        });
+    };
 
     const playTrack = (index) => {
         setCurrentTrackIndex(index);
         setIsPlaying(true);
-        setPlayed(0);
     };
 
     const pauseTrack = () => {
@@ -36,19 +50,11 @@ const MusicPlayerProvider = ({children}) => {
     };
 
     const nextTrack = () => {
-        if (isShuffling) {
-            setCurrentTrackIndex(Math.floor(Math.random() * musicData.length));
-        } else {
-            setCurrentTrackIndex((prevIndex) => (prevIndex + 1) % musicData.length);
-        }
-        setIsPlaying(true);
-        setPlayed(0);
+        setCurrentTrackIndex((prevIndex) => (prevIndex + 1) % musicData.length);
     };
 
     const prevTrack = () => {
         setCurrentTrackIndex((prevIndex) => (prevIndex - 1 + musicData.length) % musicData.length);
-        setIsPlaying(true);
-        setPlayed(0);
     };
 
     const updatePlayed = (played) => {
@@ -60,57 +66,48 @@ const MusicPlayerProvider = ({children}) => {
     };
 
     const toggleShuffle = () => {
-        setIsShuffling(!isShuffling);
+        setIsShuffling((prev) => !prev);
     };
 
     const toggleRepeat = () => {
-        setIsRepeating(!isRepeating);
+        setIsRepeating((prev) => !prev);
     };
 
     const handleTrackEnd = () => {
         if (isRepeating) {
-            setPlayed(0);
-            setIsPlaying(true);
+            playTrack(currentTrackIndex);
         } else {
             nextTrack();
         }
     };
 
-    // 재생 목록에 트랙을 추가하는 함수
-    const addTrackToList = (track) => {
-        setMusicData((prevMusicData) => [track, ...prevMusicData]);
-    };
-
-    // 재생 목록의 끝에 트랙을 추가하는 함수
-    const addTrackToEnd = (track) => {
-        setMusicData((prevMusicData) => [...prevMusicData, track]);
-    };
-
-  return (
-    <MusicPlayerContext.Provider
-        value={{
-            musicData,
-            currentTrackIndex,
-            isPlaying,
-            played,
-            duration,
-            isShuffling,
-            isRepeating,
-            playTrack,
-            pauseTrack,
-            nextTrack,
-            prevTrack,
-            updatePlayed,
-            updateDuration,
-            toggleShuffle,
-            toggleRepeat,
-            handleTrackEnd,
-            addTrackToList,
-            addTrackToEnd
-        }}>
-        {children}
-    </MusicPlayerContext.Provider>
-  )
-}
+    return (
+        <MusicPlayerContext.Provider
+            value={{
+                musicData,
+                currentTrackIndex,
+                isPlaying,
+                played,
+                duration,
+                loadInitialData,
+                addTrackToList,
+                addTrackToEnd,
+                playTrack,
+                pauseTrack,
+                nextTrack,
+                prevTrack,
+                updatePlayed,
+                updateDuration,
+                toggleShuffle,
+                isShuffling,
+                toggleRepeat,
+                isRepeating,
+                handleTrackEnd,
+            }}
+        >
+            {children}
+        </MusicPlayerContext.Provider>
+    );
+};
 
 export default MusicPlayerProvider

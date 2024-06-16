@@ -2,25 +2,26 @@ import React, { useEffect, useState } from 'react';
 
 const Modal = ({ isOpen, onClose, onAddToPlaylist }) => {
     const [playlists, setPlaylists] = useState([]);
+    const [selectedPlaylist, setSelectedPlaylist] = useState('');
 
     useEffect(() => {
         if (isOpen) {
-            const count = Number(localStorage.getItem('playlistCount')) || 0;
-            const loadedPlaylists = [];
-            for (let i = 1; i <= count; i++) {
-                const playlistKey = `playlist${i}`;
-                const playlist = JSON.parse(localStorage.getItem(playlistKey));
-                if (playlist) {
-                    loadedPlaylists.push(playlist);
-                }
-            }
-            setPlaylists(loadedPlaylists);
+            const storedPlaylists = JSON.parse(localStorage.getItem('playlists')) || [];
+            setPlaylists(storedPlaylists);
         }
     }, [isOpen]);
 
-    const handleAddClick = (playlistId) => {
-        onAddToPlaylist(playlistId);
-        onClose();
+    const handleAddClick = () => {
+        if (selectedPlaylist) {
+            onAddToPlaylist(selectedPlaylist);
+            onClose();
+        } else {
+            alert('플레이리스트를 선택하세요.');
+        }
+    };
+
+    const handleSelectChange = (event) => {
+        setSelectedPlaylist(event.target.value);
     };
 
     if (!isOpen) return null;
@@ -28,16 +29,17 @@ const Modal = ({ isOpen, onClose, onAddToPlaylist }) => {
     return (
         <div className="modal">
             <div className="modal-content">
-                <span className="close" onClick={onClose}>&times;</span>
+                <span className="modal_close" onClick={onClose}>&times;</span>
                 <h2>플레이리스트 선택</h2>
-                <ul>
+                <select value={selectedPlaylist} onChange={handleSelectChange}>
+                    <option value="" disabled>플레이리스트를 선택하세요</option>
                     {playlists.map((playlist) => (
-                        <li key={playlist.id}>
+                        <option key={playlist.id} value={playlist.id}>
                             {playlist.name}
-                            <button onClick={() => handleAddClick(playlist.id)}>추가</button>
-                        </li>
+                        </option>
                     ))}
-                </ul>
+                </select>
+                <button onClick={handleAddClick} className="add-button">추가</button>
             </div>
         </div>
     );

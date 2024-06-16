@@ -1,0 +1,59 @@
+#playlist .music-chart .list ul li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    background-color: #f5f5f5;
+}
+
+#playlist .music-chart .list ul li div:first-child {
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+    overflow: hidden;
+}
+
+#playlist .music-chart .list ul li div:first-child .rank {
+    flex-shrink: 0;
+    width: 40px;
+    text-align: center;
+}
+
+#playlist .music-chart .list ul li div:first-child .img {
+    flex-shrink: 0;
+    width: 60px;
+    height: 60px;
+    margin-right: 10px;
+    background-size: cover;
+    background-position: center;
+    border-radius: 5px;
+}
+
+#playlist .music-chart .list ul li div:first-child .title {
+    flex-grow: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+#playlist .music-chart .list ul li div:last-child {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+#playlist .music-chart .list ul li button {
+    margin-left: 10px;
+    cursor: pointer;
+    background-color: #7d57ff;
+    border-radius: 10rem;
+    padding: 2px 10px;
+    color: var(--white);
+    border: none;
+}
+
+#playlist .music-chart .list ul li button:hover {
+    background-color: #5d3ebb;
+}
