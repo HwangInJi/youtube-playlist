@@ -29,7 +29,7 @@ const Modal = ({ isOpen, onClose, onAddToPlaylist }) => {
     return (
         <div className="modal">
             <div className="modal-content">
-                <span className="modal_close" onClick={onClose}>&times;</span>
+                <span className="modal_close" onClick={onClose}>X</span>
                 <h2>플레이리스트 선택</h2>
                 <select value={selectedPlaylist} onChange={handleSelectChange}>
                     <option value="" disabled>플레이리스트를 선택하세요</option>

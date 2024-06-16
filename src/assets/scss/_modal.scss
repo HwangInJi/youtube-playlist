@@ -10,7 +10,6 @@
     transform: translate(-50%, -50%);
     width: 100vw;
     height: 100vh;
-    border-radius: 0;
 }
 
 .modal-content {
@@ -25,11 +24,11 @@
 
 .modal_close {
     position: absolute;
-    top: -40px;
-    right: -3px;
+    top: 10px;
+    right: 10px;
     cursor: pointer;
-    font-size: 5rem;
-    color: var(--white);
+    font-size: 24px;
+    color: black;
 }
 
 select {
