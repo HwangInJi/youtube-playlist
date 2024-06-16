@@ -34,7 +34,7 @@ const Chart = ({ title, showCalendar, selectedDate, onDateChange, minDate, maxDa
                     q: query,
                     type: 'video',
                     maxResults: 5,
-                    key: 'AIzaSyCg_Tv46yrtzuYFe7Z_5r6Jkr1ARzmBB6M',
+                    key: 'AIzaSyATiSW_lYTfNsfcGYS1gIJUSRfJzROXuQc',
                 },
             });
             setYoutubeResults(response.data.items);

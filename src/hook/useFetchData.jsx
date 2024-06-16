@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-const useFetchData = (url) => {
+const useFetchData = (filePath) => {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -8,21 +8,21 @@ const useFetchData = (url) => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch(url);
+                const response = await fetch(filePath);
                 if (!response.ok) {
-                    throw new Error('네트워크 상태가 좋지 않네요!! 관리자에게 문의 주세요!');
+                    throw new Error('Network response was not ok');
                 }
                 const result = await response.json();
                 setData(result);
+                setLoading(false);
             } catch (error) {
                 setError(error);
-            } finally {
                 setLoading(false);
             }
         };
 
         fetchData();
-    }, [url]);
+    }, [filePath]);
 
     return { data, loading, error };
 };
