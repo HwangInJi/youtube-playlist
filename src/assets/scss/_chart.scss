@@ -2,7 +2,7 @@
     padding: 0 2rem 2rem 2rem;
     position: relative;
 
-    >.title {
+    > .title {
         font-weight: 900;
         margin-bottom: 20px;
         display: flex;
@@ -31,7 +31,7 @@
         }
     }
 
-    >.list {
+    > .list {
         ul {
             width: 100%;
             display: flex;
@@ -70,6 +70,9 @@
 
                 .title {
                     flex: 1;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
                 }
 
                 .album {
@@ -98,67 +101,60 @@
     height: 370px;
     background-color: var(--pointBg);
     padding: 2rem;
+    overflow-y: auto;
 
     h3 {
         font-size: 1.5rem;
         margin-bottom: 1rem;
     }
 
-    li {
-        display: flex;
-        align-items: center;
-        margin-bottom: 8px;
-        font-family: var(--fontJ);
-        font-weight: 300;
-        height: 44px;
-
-        .img {
-            width: 44px;
+    ul {
+        li {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+            font-family: var(--fontJ);
+            font-weight: 300;
             height: 44px;
-            border-radius: 50%;
-            display: block;
-            margin-right: 10px;
-            background-size: 190%;
-            background-position: center;
-        }
 
-        .title {
-            flex: 1 1;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
+            .img {
+                width: 44px;
+                height: 44px;
+                border-radius: 50%;
+                display: block;
+                margin-right: 10px;
+                background-size: 190%;
+                background-position: center;
+            }
 
-        .playNow {
-            padding: 17px 3px 10px 3px;
-            cursor: pointer;
-            font-size: 20px;
-        }
+            .title {
+                flex: 1;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
 
-        .listAdd {
-            padding: 15px 10px 10px 10px;
-            cursor: pointer;
-            font-size: 20px;
-        }
+            .playNow,
+            .listAdd,
+            .chartAdd {
+                padding: 10px;
+                cursor: pointer;
+                font-size: 20px;
+                position: relative;
+            }
 
-        .chartAdd {
-            padding: 15px 20px 10px 0px;
-            cursor: pointer;
-            font-size: 20px;
-            position: relative;
-        }
-
-        &:hover {
-            background-color: var(--pointColor);
-            border-radius: 50px;
-            color: var(--white);
+            &:hover {
+                background-color: var(--pointColor);
+                border-radius: 50px;
+                color: var(--white);
+            }
         }
     }
 
     .close {
         position: absolute;
-        right: 0;
-        top: 0;
+        right: 10px;
+        top: 10px;
         width: 20px;
         height: 20px;
         background-color: var(--pointColor);
@@ -169,5 +165,4 @@
             font-size: 20px;
         }
     }
-
 }

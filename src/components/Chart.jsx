@@ -5,6 +5,7 @@ import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Modal from './Modal';
+import VideoPopup from './VideoPopup';
 import { FcCalendar } from 'react-icons/fc';
 import { MdFormatListBulletedAdd, MdOutlinePlayCircleFilled, MdClose, MdHive } from 'react-icons/md';
 import { MusicPlayerContext } from '../context/MusicPlayerProvider';
@@ -22,6 +23,8 @@ const Chart = ({ title, showCalendar, selectedDate, onDateChange, minDate, maxDa
     const [selectedTitle, setSelectedTitle] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedTrack, setSelectedTrack] = useState(null);
+    const [isVideoPopupOpen, setIsVideoPopupOpen] = useState(false);
+    const [videoUrl, setVideoUrl] = useState('');
 
     const searchYoutube = async (query) => {
         try {
@@ -46,15 +49,8 @@ const Chart = ({ title, showCalendar, selectedDate, onDateChange, minDate, maxDa
     };
 
     const handlePlayNow = (result) => {
-        const newTrack = {
-            title: result.snippet.title,
-            videoID: result.id.videoId,
-            imageURL: result.snippet.thumbnails.default.url,
-            artist: result.snippet.channelTitle,
-            rank: 1
-        };
-        addTrackToList(newTrack);
-        playTrack(0); // 첫 번째 트랙을 재생
+        setVideoUrl(`https://www.youtube.com/watch?v=${result.id.videoId}`);
+        setIsVideoPopupOpen(true);
     };
 
     const handleAddToList = (result) => {
@@ -149,6 +145,11 @@ const Chart = ({ title, showCalendar, selectedDate, onDateChange, minDate, maxDa
                 isOpen={isModalOpen}
                 onClose={() => setIsModalOpen(false)}
                 onAddToPlaylist={handleAddToPlaylist}
+            />
+            <VideoPopup
+                isOpen={isVideoPopupOpen}
+                videoUrl={videoUrl}
+                onClose={() => setIsVideoPopupOpen(false)}
             />
         </>
     );
