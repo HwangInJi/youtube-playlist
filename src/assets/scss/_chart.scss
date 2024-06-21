@@ -1,11 +1,18 @@
 .music-chart {
-    padding: 0 2rem 2rem 2rem;
+    padding: 0.5rem 2rem 2rem 2rem;
     position: relative;
+    width: 96%;
+    background-color: #ffffff87;
+    border-radius: 2rem;
+    margin: 0 auto;
+    color: #072337;
 
-    .title01 {
+    .title {
         display: flex;
-        justify-content: flex-end;
+        justify-content: space-between;
         align-items: center;
+        margin-bottom: 1rem;
+        margin-top: 1rem;
 
         .my__title1 {
             font-weight: 900;
@@ -52,7 +59,7 @@
 
                 .rank {
                     flex: 0 0 50px;
-                    color: var(--black700);
+                    color: #009198;
                 }
 
                 .img {
@@ -75,6 +82,7 @@
                     white-space: nowrap;
                     overflow: hidden;
                     text-overflow: ellipsis;
+                    margin-top: 1rem;
                 }
 
                 .album {
@@ -101,7 +109,7 @@
     right: 400px;
     bottom: 0;
     height: 370px;
-    background-color: var(--pointBg);
+    background-color: #e7f7fe;
     padding: 2rem;
     overflow-y: auto;
 
@@ -146,7 +154,7 @@
             }
 
             &:hover {
-                background-color: var(--pointColor);
+                background-color: #167ac6;
                 border-radius: 50px;
                 color: var(--white);
             }
@@ -159,7 +167,7 @@
         top: 10px;
         width: 20px;
         height: 20px;
-        background-color: var(--pointColor);
+        background-color: #167ac6;
         color: var(--white);
         cursor: pointer;
 
@@ -167,4 +175,75 @@
             font-size: 20px;
         }
     }
+}
+
+// #myMusic {
+//     background: url('/path-to-your-background-image.jpg') no-repeat center center;
+//     background-size: cover;
+//     padding: 20px;
+// }
+
+.myMusic .music-chart {
+    background-color: rgba(255, 255, 255, 0.8);
+    /* 백그라운드 이미지 위에 반투명 배경을 추가 */
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.myMusic .title01 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.myMusic .my__title1 {
+    font-size: 2.5rem;
+    color: black;
+    margin-bottom: 20px;
+}
+
+.myMusic .music_select {
+    margin-bottom: 20px;
+    padding: 10px;
+    font-size: 1rem;
+}
+
+.myMusic .my__title2 {
+    width: 100%;
+}
+
+.myMusic ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.myMusic li {
+    display: flex;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.myMusic li:last-child {
+    border-bottom: none;
+}
+
+.myMusic .rank {
+    margin-right: 10px;
+    font-weight: bold;
+    color: black;
+}
+
+.myMusic .img {
+    width: 50px;
+    height: 50px;
+    background-size: cover;
+    margin-right: 10px;
+}
+
+.myMusic .title {
+    font-size: 1rem;
+    color: black;
+    flex: 1;
 }

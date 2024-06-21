@@ -4,6 +4,7 @@ import Loading from '../components/Loading';
 import Error from '../components/Error';
 import Chart from '../components/Chart';
 import { MusicPlayerContext } from '../context/MusicPlayerProvider';
+import '../assets/scss/_chart.scss'; // 스타일 파일 임포트
 
 const Mymusic = () => {
     const [selectedFile, setSelectedFile] = useState('./data/music_list.json');
@@ -39,19 +40,19 @@ const Mymusic = () => {
     if (error) return <Error message={error.message} />;
 
     return (
-        <section id='myMusic'>
+        <section id='myMusic' className='myMusic'>
             <div className="music-chart">
                 <div className="title01">
                     <h2 className='my__title1'>➕ Play List : </h2>
-                    <select onChange={handleFileChange} value={selectedFile}>
+                    <select className='music_select' onChange={handleFileChange} value={selectedFile}>
                         {jsonFiles.map((file) => (
                             <option key={file.name} value={file.path}>
                                 {file.name}
                             </option>
                         ))}
                     </select>
+                    <Chart className='my__title2' title="💗 My Play List" data={data} showCalendar={false} />
                 </div>
-                <Chart className='my__title2' title="💗 My Play List" data={data} showCalendar={false} />
             </div>
         </section>
     );

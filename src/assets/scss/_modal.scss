@@ -47,12 +47,12 @@ select {
     margin-top: 20px;
     border: none;
     border-radius: 5px;
-    background-color: #7D57FF;
+    background-color: rgba(27, 127, 204, .8);
     color: white;
     font-size: 16px;
     cursor: pointer;
 }
 
 .add-button:hover {
-    background-color: #5d3ebb;
+    background-color: rgba(27, 127, 204, .8);
 }

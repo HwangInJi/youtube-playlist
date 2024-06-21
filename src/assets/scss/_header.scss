@@ -6,19 +6,23 @@
     height: 100vh;
     background-color: #b1e4fc4d;
     box-shadow: 0 0 10px #60BDF0;
-    overflow-y: scroll; /* 세로 스크롤 활성화 */
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+    overflow-y: scroll;
+    /* 세로 스크롤 활성화 */
+    scrollbar-width: none;
+    /* Firefox */
+    -ms-overflow-style: none;
+    /* Internet Explorer 10+ */
 }
 
 #header::-webkit-scrollbar {
-    display: none; /* Chrome, Safari, Opera */
+    display: none;
+    /* Chrome, Safari, Opera */
 }
 
 #header h1 {
     padding: 2rem 2rem 1rem 2rem;
 
-    svg{
+    svg {
         color: #c2f0ff;
     }
 }
@@ -34,7 +38,7 @@
     font-family: var(--fontJ);
     font-size: 12px;
     font-weight: 900;
-    color: var(--white);
+    color: #c2f0ff;
     text-transform: uppercase;
     letter-spacing: 2px;
     padding: 2rem 2rem 1rem 2rem;

@@ -1,24 +1,24 @@
 import React, { useState, useEffect, useContext } from 'react';
 import Slider from "react-slick";
-import "slick-carousel/slick/slick.css"; 
+import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import '../assets/scss/_home.scss';
 import { MusicPlayerContext } from '../context/MusicPlayerProvider';
 import he from 'he';  // he 라이브러리 임포트
 
 const jsonFiles = [
-    { name: 'music_list.json', path: './data/music_list.json' },
-    { name: 'byunghyun.json', path: './data/byunghyun.json' },
-    { name: 'daewon.json', path: './data/daewon.json' },
-    { name: 'hyeji.json', path: './data/hyeji.json' },
-    { name: 'kimjw.json', path: './data/kimjw.json' },
-    { name: 'parkjungmin.json', path: './data/parkjungmin.json' },
-    { name: 'seongmin.json', path: './data/seongmin.json' },
-    { name: 'seonhwa.json', path: './data/seonhwa.json' },
-    { name: 'seoyeon.json', path: './data/seoyeon.json' },
-    { name: 'sohyun.json', path: './data/sohyun.json' },
-    { name: 'yihyun.json', path: './data/yihyun.json' },
-    { name: 'yoonseo.json', path: './data/yoonseo.json' },
+  { name: 'music_list.json', path: './data/music_list.json' },
+  { name: 'byunghyun.json', path: './data/byunghyun.json' },
+  { name: 'daewon.json', path: './data/daewon.json' },
+  { name: 'hyeji.json', path: './data/hyeji.json' },
+  { name: 'kimjw.json', path: './data/kimjw.json' },
+  { name: 'parkjungmin.json', path: './data/parkjungmin.json' },
+  { name: 'seongmin.json', path: './data/seongmin.json' },
+  { name: 'seonhwa.json', path: './data/seonhwa.json' },
+  { name: 'seoyeon.json', path: './data/seoyeon.json' },
+  { name: 'sohyun.json', path: './data/sohyun.json' },
+  { name: 'yihyun.json', path: './data/yihyun.json' },
+  { name: 'yoonseo.json', path: './data/yoonseo.json' },
 ];
 
 const Home = () => {
@@ -31,7 +31,7 @@ const Home = () => {
     const fetchData = async () => {
       try {
         const results = await Promise.all(
-          jsonFiles.map(file => 
+          jsonFiles.map(file =>
             fetch(file.path)
               .then(response => response.json())
               .then(jsonData => ({ [file.name]: jsonData.slice(0, 10) }))
@@ -58,8 +58,6 @@ const Home = () => {
     speed: 500,
     slidesToShow: 3,
     slidesToScroll: 1,
-    centerMode: true,
-    centerPadding: '0',
     autoplay: true,
     autoplaySpeed: 3000,
     responsive: [
@@ -103,7 +101,7 @@ const Home = () => {
               <ul>
                 {data[fileName].map((item, index) => (
                   <li key={index}>
-                    <div 
+                    <div
                       className={`star ${isTrackInPlaylist(item) ? 'filled' : ''}`}
                       onClick={() => toggleTrackInPlaylist(item)}
                     ></div>
