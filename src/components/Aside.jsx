@@ -6,7 +6,7 @@ import he from 'he';  // he 라이브러리 임포트
 
 const Aside = () => {
     const {
-        musicData,
+        playlist,
         currentTrackIndex,
         isPlaying,
         played,
@@ -33,7 +33,7 @@ const Aside = () => {
         }
     }, [currentTrackIndex]);
 
-    if (musicData.length === 0) {
+    if (playlist.length === 0) {
         return (
             <aside id="aside">
                 <div className="play-now">
@@ -50,7 +50,7 @@ const Aside = () => {
         );
     }
 
-    const currentTrack = musicData[currentTrackIndex];
+    const currentTrack = playlist[currentTrackIndex];
 
     const handleProgress = (state) => {
         updatePlayed(state.played);
@@ -150,7 +150,7 @@ const Aside = () => {
             <div className="play-list">
                 <h3><IoMusicalNotes /> Play List</h3>
                 <ul>
-                    {musicData.map((track, index) => (
+                    {playlist.map((track, index) => (
                         <li
                             key={index}
                             ref={index === currentTrackIndex ? currentTrackRef : null}

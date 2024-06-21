@@ -3,7 +3,7 @@ import React, { createContext, useState, useEffect } from 'react';
 export const MusicPlayerContext = createContext();
 
 export const MusicPlayerProvider = ({ children }) => {
-    const [musicData, setMusicData] = useState([]);
+    const [playlist, setPlaylist] = useState([]);
     const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
     const [isPlaying, setIsPlaying] = useState(false);
     const [played, setPlayed] = useState(0);
@@ -12,32 +12,29 @@ export const MusicPlayerProvider = ({ children }) => {
     const [isRepeating, setIsRepeating] = useState(false);
 
     useEffect(() => {
-        const storedMusicData = JSON.parse(localStorage.getItem('musicData')) || [];
-        if (storedMusicData.length > 0) {
-            setMusicData(storedMusicData);
+        const storedPlaylist = JSON.parse(localStorage.getItem('playlist')) || [];
+        if (storedPlaylist.length > 0) {
+            setPlaylist(storedPlaylist);
         }
     }, []);
 
     useEffect(() => {
-        localStorage.setItem('musicData', JSON.stringify(musicData));
-    }, [musicData]);
+        localStorage.setItem('playlist', JSON.stringify(playlist));
+    }, [playlist]);
 
     const loadInitialData = (data) => {
-        setMusicData(data);
-    };
-
-    const addTrackToList = (track) => {
-        const newTrack = { ...track, rank: 1 };
-        setMusicData((prevData) => {
-            return prevData.map((item, index) => ({ ...item, rank: index + 2 })).concat(newTrack);
-        });
+        setPlaylist(data);
     };
 
     const addTrackToEnd = (track) => {
-        setMusicData((prevData) => {
+        setPlaylist((prevData) => {
             const newTrack = { ...track, rank: prevData.length + 1 };
             return [...prevData, newTrack];
         });
+    };
+
+    const removeTrackFromList = (track) => {
+        setPlaylist((prevData) => prevData.filter(item => item.title !== track.title || item.artist !== track.artist));
     };
 
     const playTrack = (index) => {
@@ -50,11 +47,11 @@ export const MusicPlayerProvider = ({ children }) => {
     };
 
     const nextTrack = () => {
-        setCurrentTrackIndex((prevIndex) => (prevIndex + 1) % musicData.length);
+        setCurrentTrackIndex((prevIndex) => (prevIndex + 1) % playlist.length);
     };
 
     const prevTrack = () => {
-        setCurrentTrackIndex((prevIndex) => (prevIndex - 1 + musicData.length) % musicData.length);
+        setCurrentTrackIndex((prevIndex) => (prevIndex - 1 + playlist.length) % playlist.length);
     };
 
     const updatePlayed = (played) => {
@@ -84,14 +81,14 @@ export const MusicPlayerProvider = ({ children }) => {
     return (
         <MusicPlayerContext.Provider
             value={{
-                musicData,
+                playlist,
                 currentTrackIndex,
                 isPlaying,
                 played,
                 duration,
                 loadInitialData,
-                addTrackToList,
                 addTrackToEnd,
+                removeTrackFromList,
                 playTrack,
                 pauseTrack,
                 nextTrack,
@@ -110,4 +107,4 @@ export const MusicPlayerProvider = ({ children }) => {
     );
 };
 
-export default MusicPlayerProvider
+export default MusicPlayerProvider;

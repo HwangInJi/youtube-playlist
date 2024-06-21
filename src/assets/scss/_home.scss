@@ -2,14 +2,17 @@
   text-align: center;
   padding: 20px;
   bottom: 5rem;
+}
 
-  h1{
-    font-size: 4rem;
-    em{
-      font-weight: bold;
-      color: #5a4fcf;
-    }
-  }
+.chart-container h1 {
+  font-size: 3rem;
+  font-family: var(--fontK);
+  text-align: left;
+}
+
+.chart-container h1 em {
+  font-weight: bold;
+  color: #0f8dbe;
 }
 
 .slick-slider {
@@ -27,38 +30,59 @@
   border-radius: 8px;
   background-color: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
 .chart h2 {
   font-size: 1.5rem;
   margin-bottom: 10px;
-  color: #5a4fcf; /* 포인트 보라색 */
+  color: #0f8dbe;
 }
 
-.chart table {
+.chart ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
   width: 100%;
-  border-collapse: collapse;
 }
 
-.chart th, .chart td {
-  border: 1px solid #ddd;
-  padding: 8px;
-  text-align: center;
+.chart li {
+  display: flex;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #ddd;
 }
 
-.chart th {
-  background-color: #eaeaea;
-  color: #5a4fcf; /* 포인트 보라색 */
+.chart li:last-child {
+  border-bottom: none;
 }
 
-.chart tr:nth-child(even) {
-  background-color: #f9f9f9;
+.chart .star {
+  width: 20px;
+  height: 20px;
+  background-color: #ffd700;
+  clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+  margin-right: 10px;
+  cursor: pointer;
+  transition: transform 0.3s;
 }
 
-.chart tr:hover {
-  background-color: #f1f1f1;
+.chart .star.filled {
+  background-color: #0f8dbe;
 }
 
-.chart td {
+.chart .details {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.chart .details span {
+  font-size: 1rem;
   color: #333;
+  text-align: left;
+  flex: 1;
 }
