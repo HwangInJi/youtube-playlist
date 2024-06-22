@@ -37,8 +37,10 @@ const Playlist = () => {
     const updateLocalStorage = (updatedPlaylist) => {
         const storedPlaylists = JSON.parse(localStorage.getItem('playlists')) || [];
         const playlistIndex = storedPlaylists.findIndex(pl => pl.id === updatedPlaylist.id);
-        storedPlaylists[playlistIndex] = updatedPlaylist;
-        localStorage.setItem('playlists', JSON.stringify(storedPlaylists));
+        if (playlistIndex !== -1) {
+            storedPlaylists[playlistIndex] = updatedPlaylist;
+            localStorage.setItem('playlists', JSON.stringify(storedPlaylists));
+        }
     };
 
     return (

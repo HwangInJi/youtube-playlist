@@ -18,7 +18,7 @@ const CustomInput = forwardRef(({ value, onClick }, ref) => (
 ));
 
 const Chart = ({ title, showCalendar, selectedDate, onDateChange, minDate, maxDate, data }) => {
-    const { addTrackToList, addTrackToEnd, playTrack, musicData } = useContext(MusicPlayerContext);
+    const { addTrackToList, addTrackToEnd, playTrack, playlist } = useContext(MusicPlayerContext);
     const [youtubeResults, setYoutubeResults] = useState([]);
     const [selectedTitle, setSelectedTitle] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -54,12 +54,16 @@ const Chart = ({ title, showCalendar, selectedDate, onDateChange, minDate, maxDa
     };
 
     const handleAddToList = (result) => {
+        if (!playlist) {
+            toast.error('음악 데이터를 로드할 수 없습니다.');
+            return;
+        }
         const newTrack = {
             title: result.snippet.title,
             videoID: result.id.videoId,
             imageURL: result.snippet.thumbnails.default.url,
             artist: result.snippet.channelTitle,
-            rank: musicData.length + 1
+            rank: playlist.length + 1
         };
         addTrackToEnd(newTrack);
         toast.success('리스트에 추가했습니다.');
