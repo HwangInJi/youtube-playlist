@@ -10,6 +10,7 @@ import Home from "./pages/Home";
 import Mymusic from "./pages/Mymusic";
 import ChartList from "./pages/ChartList";
 import PlayList from "./pages/PlayList";
+import Searchlist from "./pages/Searchlist";
 
 import MusicPlayerProvider from "./context/MusicPlayerProvider";
 
@@ -25,12 +26,12 @@ const App = () => {
                         <Route path="/mymusic" element={<Mymusic />} />
                         <Route path="/playlist/:id" element={<PlayList />} />
                         <Route path="/chart/:id" element={<ChartList />} />
+                        <Route path="/searchlist" element={<Searchlist />} />
                     </Routes>
                 </Main>
                 <Aside />
-        </BrowserRouter>
+            </BrowserRouter>
         </MusicPlayerProvider>
-        
     );
 };
 

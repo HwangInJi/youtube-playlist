@@ -22,13 +22,13 @@ const ChartList = () => {
 
     return (
         <Chart
-            title={`🎵 ${id} 차트 Top100`} 
-            data={data} 
+            title={`🎵 ${id} 차트 Top100`}
+            data={data}
             showCalendar={true}
-            selectedDate={selectedDate} 
-            onDateChange={setSelectedDate} 
-            minDate={new Date('2024-05-01')} 
-            maxDate={yesterday} 
+            selectedDate={selectedDate}
+            onDateChange={setSelectedDate}
+            minDate={new Date('2024-05-01')}
+            maxDate={yesterday}
         />
     );
 };

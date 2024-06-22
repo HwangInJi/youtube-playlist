@@ -1,19 +1,100 @@
 .search {
     position: relative;
     padding: 2rem;
+}
 
-    label {
-        position: absolute;
-        left: 53px;
-        top: 45px;
-    }
+.search label {
+    position: absolute;
+    left: 53px;
+    top: 45px;
+}
 
-    input {
-        width: 100%;
-        padding: 1rem;
-        border-radius: 50px;
-        padding-left: 50px;
-        font-family: var(--fontJ);
-        font-weight: 300;
-    }
+.search input {
+    width: 100%;
+    padding: 1rem;
+    border-radius: 50px;
+    padding-left: 50px;
+    font-family: var(--fontJ);
+    font-weight: 300;
+}
+
+#searchlist .list ul {
+    position: relative;
+    padding: 1rem;
+    width: 96%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: rgba(255, 255, 255, 0.5294117647);
+    border-radius: 2rem;
+}
+
+#searchlist .list ul li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px 20px;
+    border-radius: 50px;
+    cursor: pointer;
+    font-family: var(--fontJ);
+    font-weight: 300;
+}
+
+#searchlist .list ul li:hover {
+    background-color: var(--white);
+    border-radius: 2rem;
+}
+
+#searchlist .list ul li div:first-child {
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+    overflow: hidden;
+}
+
+#searchlist .list ul li div:first-child .rank {
+    flex: 0 0 50px;
+    color: #009198;
+}
+
+#searchlist .list ul li div:first-child .img {
+    width: 50px;
+    height: 50px;
+    display: inline-block;
+    margin-right: 20px;
+    background-size: cover;
+    background-position: center;
+    border-radius: 5px;
+}
+
+#searchlist .list ul li div:first-child .title {
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#searchlist .list ul li .action-icons {
+    display: flex;
+    gap: 10px;
+}
+
+#searchlist .list ul li .action-icons span {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 10rem;
+    background-color: #60BDF0;
+    color: white;
+    font-size: 14px;
+}
+
+#searchlist .list ul li .action-icons span:hover {
+    background-color: #acdffa;
+}
+
+#searchlist .list ul li .action-icons span .ir {
+    display: none;
 }
